@@ -12,20 +12,42 @@ for(var i=0;i<count;i++){
     }
 }
 
-function runCode(input) {
+function runCodeLocal(input) {
     navigator.serviceWorker.controller.postMessage({
         code: '(function() { ' + input + ' }())'
     });
 }
 
+function runCodeRemote(input) {
+    fetch('http://127.0.0.1:3000', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        body: JSON.stringify({
+            code: input
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        res.text().then(text => {
+            console.log("server's response: ", JSON.parse(text));
+            document.getElementById('output').innerText = "Server Response: " + JSON.parse(text).response;
+        })
+    }).catch(err => {
+        console.log("server's error: ", err);
+    });
+}
+
 navigator.serviceWorker.addEventListener('message', event => {
     if(event.data.error) {
-        console.log(event.data.response, event.data.error);
+        console.log("worker error: ", event.data);
     }
     else{
-        console.log("worker's repsonse: ", JSON.parse(event.data.response));
+        console.log("worker's repsonse: ", event.data);
     }
-    document.getElementById('output').innerText = event.data.response;
+    document.getElementById('output').innerText = "Local Response: " + JSON.parse(event.data.response).response;
   });
 
 navigator.serviceWorker.register("/worker.js")

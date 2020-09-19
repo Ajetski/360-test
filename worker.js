@@ -7,11 +7,12 @@ self.addEventListener('activate', function(event) {
 });
 
 addEventListener('message', (event) => {
+    console.log("Incoming service worker event: ", event);
     if(event.data && event.data.code) {
         let response;
         let error;
         try {
-            response = JSON.stringify(eval(event.data.code));
+            response = JSON.stringify({response: eval(event.data.code)});
         }
         catch(err) {
             response = "An error occurred in your code...";
