@@ -1,4 +1,4 @@
 [submodule "ace-builds"]
-    path = ace-builds
+    path = web-raw/ace-builds
     url = https://github.com/ajaxorg/ace-builds.git
     branch = master
