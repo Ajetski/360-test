@@ -5,9 +5,9 @@ import 'ace-builds/webpack-resolver';
 // language package, choose your own 
 import 'ace-builds/src-noconflict/mode-javascript';
 // ui-theme package
-import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-twilight';
 
-const THEME = 'ace/theme/github'; 
+const THEME = 'ace/theme/twilight'; 
 const LANG = 'ace/mode/javascript';
 
 @Component({
